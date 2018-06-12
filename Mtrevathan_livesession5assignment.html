@@ -207,19 +207,7 @@ colnames(df)[colnames(df)==&quot;V1&quot;] &lt;- &quot;Name&quot;
 colnames(df)[colnames(df)==&quot;V2&quot;] &lt;- &quot;Sex&quot;
 colnames(df)[colnames(df)==&quot;V3&quot;] &lt;- &quot;# of Children&quot;
 y2016 &lt;- subset(x=df, df$V1!=&quot;Fionayyy&quot;)
-final &lt;- merge(x=y2015, y=y2016)
-final[1:10,]</code></pre>
-<pre><code>##      Name  Sex # of Children
-## NA   &lt;NA&gt; &lt;NA&gt;            NA
-## NA.1 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.2 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.3 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.4 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.5 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.6 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.7 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.8 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.9 &lt;NA&gt; &lt;NA&gt;            NA</code></pre>
+final &lt;- merge(x=y2015, y=y2016)</code></pre>
 </div>
 <div id="data-summary" class="section level1">
 <h1>3. Data Summary</h1>
@@ -237,18 +225,23 @@ colnames(df)[colnames(df)==&quot;V2&quot;] &lt;- &quot;Sex&quot;
 colnames(df)[colnames(df)==&quot;V3&quot;] &lt;- &quot;# of Children&quot;
 y2016 &lt;- subset(x=df, df$V1!=&quot;Fionayyy&quot;)
 final &lt;- merge(x=y2015, y=y2016, by=c(&quot;Name&quot;, &quot;Sex&quot;))
-y2016[1:10,]</code></pre>
-<pre><code>##      Name  Sex # of Children
-## NA   &lt;NA&gt; &lt;NA&gt;            NA
-## NA.1 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.2 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.3 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.4 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.5 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.6 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.7 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.8 &lt;NA&gt; &lt;NA&gt;            NA
-## NA.9 &lt;NA&gt; &lt;NA&gt;            NA</code></pre>
+colnames(final)[colnames(final)==&quot;# of Children.x&quot;] &lt;- &quot;# of Children 2015&quot;
+colnames(final)[colnames(final)==&quot;# of Children.y&quot;] &lt;- &quot;# of Children 2016&quot;
+totals &lt;- final$`# of Children 2015` + final$'# of Children 2016'
+final2 &lt;- cbind(final, totals)
+colnames(final2)[colnames(final2)==&quot;totals&quot;] &lt;- &quot;Total&quot;</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Sort by Total - Most popular names are Emma, Olivia, Noah, Liam and Sophia</li>
+</ol>
+<pre class="r"><code>final3 &lt;- final2[order(final2$Total, decreasing = TRUE),]</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Printing out just the top 10 girls - Emma, Olivia, Sophia, Ava, Isabella, Mia, Charlotte, Abigail, Emily and Harper</li>
+</ol>
+<pre class="r"><code>finalgirl &lt;- final3[final3$Sex == &quot;F&quot;,]</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>csv - <a href="https://github.com/mtrevathan0/DDS---Homework5" class="uri">https://github.com/mtrevathan0/DDS---Homework5</a></li>
+</ol>
+<pre class="r"><code>write.csv(finalgirl[1:10,], file = &quot;Toptengirls.csv&quot;)</code></pre>
 </div>
 
 
